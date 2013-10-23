@@ -66,6 +66,17 @@ static struct platform_device persistent_trace_device = {
 	.id	= -1,
 };
 
+static struct resource persistent_clock_resource[] = {
+	[0] = DEFINE_RES_MEM(S3C_PA_RTC, SZ_256),
+};
+
+static struct platform_device persistent_clock = {
+	.name           = "persistent_clock",
+	.id             = -1,
+	.num_resources	= ARRAY_SIZE(persistent_clock_resource),
+	.resource	= persistent_clock_resource,
+};
+
 /*rfkill device registeration*/
 #ifdef CONFIG_BT_BCM4335
 static struct platform_device bcm4335_bluetooth_device = {
@@ -317,6 +328,9 @@ static inline void exynos_reserve_mem(void)
 static struct platform_device *universal5410_devices[] __initdata = {
 	&ramconsole_device,
 	&persistent_trace_device,
+#ifdef CONFIG_EXYNOS_PERSISTENT_CLOCK
+	&persistent_clock,
+#endif
 	&s3c_device_wdt,
 	&s3c_device_rtc,
 	&s3c_device_adc,

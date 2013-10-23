@@ -1431,6 +1431,11 @@ wl_android_set_ampdu_mpdu(struct net_device *dev, const char* string_num)
 }
 #endif /* SUPPORT_AMPDU_MPDU_CMD */
 
+#define CH20MHZ_LCHSPEC(channel) \
+	(chanspec_t)((chanspec_t)(channel) | WL_LCHANSPEC_BW_20 | \
+	WL_LCHANSPEC_CTL_SB_NONE | (((channel) <= CH_MAX_2G_CHANNEL) ? \
+	WL_LCHANSPEC_BAND_2G : WL_LCHANSPEC_BAND_5G))
+
 /* SoftAP feature */
 #ifdef SUPPORT_AUTO_CHANNEL
 static int
